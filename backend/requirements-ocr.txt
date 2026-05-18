@@ -1,0 +1,4 @@
+# Optional: install these for image/scanned document OCR support
+# PaddleOCR only supports up to Python 3.12 — skip if on Python 3.13
+paddlepaddle==3.0.0
+paddleocr==2.7.3
