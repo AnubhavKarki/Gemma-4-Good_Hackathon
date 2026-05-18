@@ -51,7 +51,7 @@ sudo apt install tesseract-ocr
 ollama pull gemma4:e4b
 ```
 
-This downloads ~2.5 GB. Only needed once.
+This downloads ~9 GB. Only needed once.
 
 ### 2. Start the backend
 
