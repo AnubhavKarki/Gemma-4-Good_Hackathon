@@ -2,7 +2,7 @@
 
 **AI-powered document comprehension for migrants, international workers, and non-native speakers.**
 
-GemmaLens explains *what documents actually mean* — not just translates them. It runs entirely on your machine using Gemma 3 4B via Ollama, so your documents never leave your device.
+GemmaLens explains *what documents actually mean* — not just translates them. It runs entirely on your machine using Gemma 4 4B via Ollama, so your documents never leave your device.
 
 > Built for the [Gemma 4 Good Hackathon](https://ai.google.dev/competition).
 
