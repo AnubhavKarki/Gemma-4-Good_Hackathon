@@ -24,7 +24,7 @@ services:
     environment:
       # Connects to the ollama service inside Docker's network
       - OLLAMA_BASE_URL=http://ollama:11434
-      - OLLAMA_MODEL=gemma3:4b
+      - OLLAMA_MODEL=gemma4:e4b
       - ALLOWED_ORIGINS=http://localhost:3000
     volumes:
       - ./backend/uploads:/app/uploads

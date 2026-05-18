@@ -44,7 +44,7 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        // GemmaLens brand colors
+        // Percepta brand colors
         brand: {
           50: "#f0fdf4",
           100: "#dcfce7",

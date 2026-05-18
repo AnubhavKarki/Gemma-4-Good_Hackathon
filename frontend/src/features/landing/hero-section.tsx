@@ -57,7 +57,7 @@ export function HeroSection() {
               className="text-xl text-muted-foreground max-w-lg leading-relaxed"
             >
               Housing contracts. Government forms. Medical paperwork.{" "}
-              <strong className="text-foreground">GemmaLens explains what they actually mean</strong> — in plain language and your own cultural context.
+              <strong className="text-foreground">Percepta explains what they actually mean</strong> — in plain language and your own cultural context.
             </motion.p>
 
             <motion.div variants={staggerItem} className="flex flex-col sm:flex-row gap-3">

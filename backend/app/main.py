@@ -20,16 +20,16 @@ async def lifespan(app: FastAPI):
     settings = get_settings()
     # Ensure upload directory exists
     Path(settings.upload_dir).mkdir(parents=True, exist_ok=True)
-    logger.info("GemmaLens backend starting — model: %s", settings.ollama_model)
+    logger.info("Percepta backend starting — model: %s", settings.ollama_model)
     yield
-    logger.info("GemmaLens backend shutting down")
+    logger.info("Percepta backend shutting down")
 
 
 def create_app() -> FastAPI:
     settings = get_settings()
 
     app = FastAPI(
-        title="GemmaLens API",
+        title="Percepta API",
         description="AI-powered document comprehension for migrants and international workers",
         version="0.1.0",
         lifespan=lifespan,

@@ -29,7 +29,7 @@ export function DocumentTypesSection() {
               Works for the documents that matter most.
             </h2>
             <p className="text-lg text-muted-foreground">
-              The documents that change your life are often the ones hardest to understand. GemmaLens focuses on the ones that affect real people every day.
+              The documents that change your life are often the ones hardest to understand. Percepta focuses on the ones that affect real people every day.
             </p>
           </motion.div>
 

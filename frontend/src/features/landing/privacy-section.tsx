@@ -15,7 +15,7 @@ const PRIVACY_POINTS = [
   {
     icon: Wifi,
     title: "Works offline",
-    description: "Once the AI model is loaded, GemmaLens works with no internet connection at all.",
+    description: "Once the AI model is loaded, Percepta works with no internet connection at all.",
   },
   {
     icon: Lock,
@@ -41,7 +41,7 @@ export function PrivacySection() {
               <span className="text-brand-300">Always.</span>
             </h2>
             <p className="text-lg text-white/70 leading-relaxed">
-              Migrants, refugees, and international workers often share sensitive documents. GemmaLens was built with privacy as a non-negotiable. Gemma 4 E4B runs entirely on your machine — no cloud, no data collection, no surveillance.
+              Migrants, refugees, and international workers often share sensitive documents. Percepta was built with privacy as a non-negotiable. Gemma 4 E4B runs entirely on your machine — no cloud, no data collection, no surveillance.
             </p>
             <Link href="/upload">
               <Button size="lg" variant="secondary" className="gap-2 font-bold">

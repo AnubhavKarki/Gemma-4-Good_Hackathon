@@ -1,7 +1,7 @@
-export const APP_NAME = "GemmaLens";
+export const APP_NAME = "Percepta";
 export const APP_TAGLINE = "Understand any document, in your language.";
 export const APP_DESCRIPTION =
-  "GemmaLens uses local AI to help you truly understand complex documents — housing contracts, government forms, medical paperwork — in plain language and your own cultural context.";
+  "Percepta uses local AI to help you truly understand complex documents — housing contracts, government forms, medical paperwork — in plain language and your own cultural context.";
 
 export const SUPPORTED_LANGUAGES = [
   { code: "en", label: "English" },

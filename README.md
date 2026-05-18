@@ -1,8 +1,8 @@
-# GemmaLens
+# Percepta
 
 **AI-powered document comprehension for migrants, international workers, and non-native speakers.**
 
-GemmaLens explains *what documents actually mean* — not just translates them. It runs entirely on your machine using Gemma 4 4B via Ollama, so your documents never leave your device.
+Percepta explains *what documents actually mean* — not just translates them. It runs entirely on your machine using Gemma 4 4B via Ollama, so your documents never leave your device.
 
 > Built for the [Gemma 4 Good Hackathon](https://ai.google.dev/competition).
 
@@ -12,19 +12,15 @@ GemmaLens explains *what documents actually mean* — not just translates them. 
 
 Many people can technically read a translated document but still don't understand it. Legal terms, housing contracts, government forms, and medical paperwork use language that trips up even fluent speakers — let alone someone navigating a new country.
 
-Current translators fail because they translate *words*. GemmaLens explains *meaning*.
+Current translators fail because they translate *words*. Percepta explains *meaning*.
 
 **Example:**
 
-| Raw text | GemmaLens explains |
-|---|---|
+
+| Raw text                               | Percepta explains                                                                                                                                                     |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | "Bond required before tenancy begins." | "A bond is a refundable security deposit — usually 4 weeks' rent — paid before you move in. You get it back when you leave, as long as you haven't damaged anything." |
 
----
-
-## Demo
-
-> Record your demo video and add a link here before submitting.
 
 ---
 
@@ -88,7 +84,7 @@ Docker wraps the backend, frontend, and Ollama together. GPU passthrough is conf
 docker compose up --build
 
 # 2. In a separate terminal, pull the model into the running Ollama container
-docker exec -it gemma4goodhackathon-ollama-1 ollama pull gemma3:4b
+docker exec -it gemma4goodhackathon-ollama-1 ollama pull gemma4:e4b
 
 # 3. Open the app
 open http://localhost:3000
@@ -108,7 +104,7 @@ User uploads document
    ├── PyMuPDF      → fallback PDF extraction
    └── Tesseract    → scanned PDFs and images
         ↓
-  Gemma 3 4B (Ollama)
+  Gemma 4 E4B (Ollama)
    ├── Step 1: Classify document type
    └── Step 2: Full comprehension analysis
         ↓
@@ -123,7 +119,7 @@ User uploads document
 ## Project Structure
 
 ```
-GemmaLens/
+Percepta/
 ├── frontend/                     # Next.js 14 (App Router)
 │   └── src/
 │       ├── app/                  # Pages: /, /upload, /processing, /results
@@ -154,13 +150,15 @@ GemmaLens/
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
+
+| Layer    | Technology                                                             |
+| -------- | ---------------------------------------------------------------------- |
 | Frontend | Next.js 14, TypeScript, TailwindCSS, Framer Motion, shadcn/ui, Zustand |
-| Backend | FastAPI, Python 3.13, Pydantic v2, Uvicorn |
-| AI | Gemma 3 4B via Ollama — runs 100% locally |
-| OCR | pdfplumber, PyMuPDF, pytesseract (Tesseract) |
-| State | In-memory document store (designed to swap to SQLite) |
+| Backend  | FastAPI, Python 3.13, Pydantic v2, Uvicorn                             |
+| AI       | Gemma 4 E4B via Ollama — runs 100% locally                             |
+| OCR      | pdfplumber, PyMuPDF, pytesseract (Tesseract)                           |
+| State    | In-memory document store (designed to swap to SQLite)                  |
+
 
 ---
 
@@ -203,17 +201,19 @@ PDF (embedded text or scanned), JPEG, PNG, WEBP, TIFF — max 20 MB
 
 All 35 languages natively supported by Gemma:
 
-| | | | |
-|---|---|---|---|
-| English | Hindi | Nepali | Bengali |
-| Urdu | Arabic | Persian (Farsi) | Hebrew |
-| Spanish | Portuguese | French | Italian |
-| German | Dutch | Polish | Czech |
-| Romanian | Hungarian | Swedish | Norwegian |
-| Danish | Finnish | Russian | Ukrainian |
-| Greek | Turkish | Indonesian | Malay |
-| Thai | Vietnamese | Korean | Japanese |
-| Filipino (Tagalog) | Swahili | Chinese (Simplified) | |
+
+|                    |            |                      |           |
+| ------------------ | ---------- | -------------------- | --------- |
+| English            | Hindi      | Nepali               | Bengali   |
+| Urdu               | Arabic     | Persian (Farsi)      | Hebrew    |
+| Spanish            | Portuguese | French               | Italian   |
+| German             | Dutch      | Polish               | Czech     |
+| Romanian           | Hungarian  | Swedish              | Norwegian |
+| Danish             | Finnish    | Russian              | Ukrainian |
+| Greek              | Turkish    | Indonesian           | Malay     |
+| Thai               | Vietnamese | Korean               | Japanese  |
+| Filipino (Tagalog) | Swahili    | Chinese (Simplified) |           |
+
 
 ---
 
@@ -234,3 +234,29 @@ All 35 languages natively supported by Gemma:
 - All AI processing runs locally on your machine via Ollama
 - No document content is sent to any external server
 - No account required, no analytics, no tracking
+
+---
+
+## Gemma 4 Implementation
+
+### 1. The Two-Stage Pipeline
+
+Accuracy requires context. We use a layered approach:
+
+- **Stage 1: Classification** — Gemma identifies the document type (e.g., *rental_agreement*).
+- **Stage 2: Comprehension** — Gemma uses that identity to focus its analysis on domain-specific risks, terms, and cultural context.
+
+### 2. Native Structured Output
+
+Gemma 4 is instructed to think as a "compassionate expert" but respond as a **strict JSON machine**.
+
+- **Pydantic Validation:** Every response is validated against a strict backend schema.
+- **Failsafe Extraction:** If the model's response is slightly messy or truncated, our extraction logic repairs the JSON before it hits the UI.
+
+### 3. Resilient "Simple Mode" Fallback
+
+Complex documents can hit token limits. If the full analysis fails, the pipeline automatically triggers a **Simple Analysis** retry with a condensed prompt. The user always gets an answer, even for the dense stuff.
+
+### 4. Cross-Lingual Latent Reasoning
+
+Gemma 4 is instructed to read the source text and **respond directly in the user's target language**. By forbidding English in the system prompt, we force the model to translate and interpret meaning simultaneously within its internal logic.
